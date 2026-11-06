@@ -1,0 +1,124 @@
+<aside class="lumina-sidebar" id="luminaSidebar" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+    <div>
+        <div class="sidebar-header">
+            <a href="{{{ config.wwwroot }}}/my/" class="brand-logo">
+                <div class="brand-icon">L</div>
+                <div class="brand-text">
+                    <span class="brand-title">{{ sitename }}</span>
+                    <span class="brand-version">v5.3 Lumina LMS</span>
+                </div>
+            </a>
+            <button class="rail-toggle-btn d-none d-lg-flex" id="luminaRailToggle" type="button" aria-label="Toggle Navigation Rail">
+                <span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_left</span>
+            </button>
+        </div>
+
+        <div class="sidebar-nav-section">
+            <div class="nav-section-title">{{#str}}academic_nav, theme_lumina{{/str}}</div>
+            <ul class="nav-list">
+                <li>
+                    <a href="{{{ config.wwwroot }}}/my/" class="nav-link-item {{#lumina_nav.is_dashboard}}active{{/lumina_nav.is_dashboard}}">
+                        <div class="nav-item-content">
+                            <span class="material-symbols-outlined nav-icon">grid_view</span>
+                            <span>{{#str}}dashboard, theme_lumina{{/str}}</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{{ config.wwwroot }}}/my/courses.php" class="nav-link-item {{#lumina_nav.is_mycourses}}active{{/lumina_nav.is_mycourses}}">
+                        <div class="nav-item-content">
+                            <span class="material-symbols-outlined nav-icon">school</span>
+                            <span>{{#str}}mycourses, theme_lumina{{/str}}</span>
+                        </div>
+                        {{#lumina_user.enrolled_count}}
+                        <span class="nav-count-badge">{{ lumina_user.enrolled_count }} Aktif</span>
+                        {{/lumina_user.enrolled_count}}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{{ config.wwwroot }}}/calendar/view.php" class="nav-link-item {{#lumina_nav.is_calendar}}active{{/lumina_nav.is_calendar}}">
+                        <div class="nav-item-content">
+                            <span class="material-symbols-outlined nav-icon">calendar_month</span>
+                            <span>{{#str}}calendar_deadlines, theme_lumina{{/str}}</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{{ lumina_nav.grades_url }}}" class="nav-link-item {{#lumina_nav.is_grades}}active{{/lumina_nav.is_grades}}">
+                        <div class="nav-item-content">
+                            <span class="material-symbols-outlined nav-icon">monitoring</span>
+                            <span>{{#str}}grades_analytics, theme_lumina{{/str}}</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-nav-section">
+            <div class="nav-section-title">{{#str}}collaboration_nav, theme_lumina{{/str}}</div>
+            <ul class="nav-list">
+                <li>
+                    <a href="{{{ lumina_nav.forum_url }}}" class="nav-link-item {{#lumina_nav.is_forum}}active{{/lumina_nav.is_forum}}">
+                        <div class="nav-item-content">
+                            <span class="material-symbols-outlined nav-icon">forum</span>
+                            <span>{{#str}}forum_discussion, theme_lumina{{/str}}</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{{ lumina_nav.resources_url }}}" class="nav-link-item {{#lumina_nav.is_resources}}active{{/lumina_nav.is_resources}}">
+                        <div class="nav-item-content">
+                            <span class="material-symbols-outlined nav-icon">local_library</span>
+                            <span>{{#str}}resource_library, theme_lumina{{/str}}</span>
+                        </div>
+                    </a>
+                </li>
+                {{#lumina_user.is_siteadmin}}
+                <li>
+                    <a href="{{{ config.wwwroot }}}/admin/search.php" class="nav-link-item {{#lumina_nav.is_admin}}active{{/lumina_nav.is_admin}}">
+                        <div class="nav-item-content">
+                            <span class="material-symbols-outlined nav-icon">admin_panel_settings</span>
+                            <span>Site Administration</span>
+                        </div>
+                    </a>
+                </li>
+                {{/lumina_user.is_siteadmin}}
+                <li>
+                    <a href="javascript:void(0)" id="luminaNavAiBtn" class="nav-link-item" role="button" aria-label="Tanya Lumina AI" title="Buka Asisten AI Akademik">
+                        <div class="nav-item-content">
+                            <span class="material-symbols-outlined nav-icon" style="color: #6366F1;">psychology</span>
+                            <span>Lumina AI Assistant</span>
+                        </div>
+                        <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-0-5 font-semibold" style="font-size: 0.65rem;">
+                            AI 24/7
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="cloud-storage-card">
+            <div class="storage-header">
+                <span class="storage-title">{{#str}}cloud_storage, theme_lumina{{/str}}</span>
+                <span class="storage-percent">{{ lumina_storage.percent }}%</span>
+            </div>
+            <div class="storage-progress">
+                <div class="progress-bar-fill" style="width: {{ lumina_storage.percent }}%;"></div>
+            </div>
+            <div class="storage-meta">{{ lumina_storage.used_formatted }} dari {{ lumina_storage.total_formatted }} digunakan</div>
+        </div>
+
+        <ul class="nav-list" style="list-style: none; padding: 0; margin: 0;">
+            <li>
+                <a href="{{{ config.wwwroot }}}/user/preferences.php" class="nav-link-item">
+                    <div class="nav-item-content">
+                        <span class="material-symbols-outlined nav-icon">settings</span>
+                        <span>Pengaturan Akun</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>

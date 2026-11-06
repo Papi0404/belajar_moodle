@@ -1,0 +1,30 @@
+{{!
+    Lumina LMS Activity Header Component.
+}}
+<div class="lumina-activity-hero mb-4 pb-3 border-bottom">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3">
+            <span id="maincontent" tabindex="-1"></span>
+            {{#title}}
+                <h1 class="h3 fw-bold text-dark mb-0 lumina-activity-title" style="letter-spacing: -0.02em;">{{{title}}}</h1>
+            {{/title}}
+        </div>
+
+        <div class="activity-header d-flex align-items-center gap-2" data-for="page-activity-header">
+            {{#completion}}
+                <div class="lumina-completion-badge">
+                    {{{completion}}}
+                </div>
+            {{/completion}}
+        </div>
+    </div>
+
+    {{#additional_items}}
+        <div class="mt-3 pt-2">
+            <nav aria-label="{{#str}} additionalcustomnav, core {{/str}}" class="lumina-activity-nav">
+                {{> core/url_select}}
+            </nav>
+        </div>
+    {{/additional_items}}
+</div>
+

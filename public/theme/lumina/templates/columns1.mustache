@@ -1,0 +1,33 @@
+{{! Lumina LMS — Single Column Layout (popup, print, frametop) }}
+{{> theme_lumina/head }}
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+<div id="page-wrapper" class="d-print-block lumina-columns1">
+    {{{ output.standard_top_of_body_html }}}
+    <div id="page" class="container-fluid d-print-block">
+        <div id="page-content" class="row pb-3 d-print-block">
+            <div id="region-main-box" class="col-12">
+                <div id="region-main" class="lumina-card p-4">
+                    {{{ output.course_content_header }}}
+                    {{#headercontent}}
+                        {{> core/activity_header }}
+                    {{/headercontent}}
+                    {{{ output.main_content }}}
+                    {{{ output.activity_navigation }}}
+                    {{{ output.course_content_footer }}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{{ output.standard_after_main_region_html }}}
+</div>
+{{{ output.standard_end_of_body_html }}}
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader'], function() {
+    M.util.js_complete('theme_boost/loader');
+});
+{{/js}}
+

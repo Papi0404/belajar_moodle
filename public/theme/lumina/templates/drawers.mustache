@@ -1,0 +1,408 @@
+{{!
+    Lumina LMS Master Drawers Layout Template.
+}}
+{{> theme_lumina/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+<div id="page-wrapper" class="d-print-block">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    <!-- Lumina Left Navigation Rail -->
+    {{> theme_lumina/nav-rail }}
+
+    <!-- Mobile Overlay Backdrop -->
+    <div id="luminaMobileOverlay" class="lumina-mobile-overlay" aria-hidden="true"></div>
+
+    <!-- Lumina Fixed Top Navigation Bar -->
+    {{> theme_lumina/navbar }}
+
+    <!-- Course Index Drawer (when inside course) -->
+    {{#courseindex}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-courseindex{{/id}}
+            {{$drawerheading}}{{> theme_boost/courseindexdrawerheading}}{{/drawerheading}}
+            {{$drawercontrols}}{{> theme_boost/courseindexdrawercontrols}}{{/drawercontrols}}
+            {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                {{{courseindex}}}
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}
+            {{$drawerstate}}show-drawer-left{{/drawerstate}}
+            {{$tooltipplacement}}right{{/tooltipplacement}}
+            {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
+            {{$closebuttonicon}}
+                <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+            {{/closebuttonicon}}
+        {{/ theme_boost/drawer}}
+    {{/courseindex}}
+
+    <!-- Side Blocks Drawer (when blocks exist) -->
+    {{#hasblocks}}
+        {{< theme_boost/drawer }}
+            {{$id}}theme_boost-drawers-blocks{{/id}}
+            {{$drawerclasses}}drawer drawer-right{{#blockdraweropen}} show{{/blockdraweropen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                <div class="d-print-none">
+                    {{{ addblockbutton }}}
+                    {{{ sidepreblocks }}}
+                </div>
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-block{{/drawerpreferencename}}
+            {{$forceopen}}{{#forceblockdraweropen}}1{{/forceblockdraweropen}}{{/forceopen}}
+            {{$drawerstate}}show-drawer-right{{/drawerstate}}
+            {{$tooltipplacement}}left{{/tooltipplacement}}
+            {{$drawercloseonresize}}1{{/drawercloseonresize}}
+            {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
+            {{$closebuttonicon}}
+                <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+            {{/closebuttonicon}}
+        {{/ theme_boost/drawer}}
+    {{/hasblocks}}
+
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers lumina-main-viewport {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        <div id="topofscroll" class="main-inner">
+            <div class="drawer-toggles d-flex">
+                {{#courseindex}}
+                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
+                        <button
+                            class="btn btn-icon icon-size-3"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-courseindex"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerindex, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
+                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                        </button>
+                    </div>
+                {{/courseindex}}
+                {{#hasblocks}}
+                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
+                        <button
+                            class="btn btn-icon icon-size-3"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_boost-drawers-blocks"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerblocks, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                        </button>
+                    </div>
+                {{/hasblocks}}
+            </div>
+
+            <!-- Lumina Hero Banner on Dashboard -->
+            {{#lumina_nav.is_dashboard}}
+            <div class="lumina-welcome-banner d-print-none">
+                <div class="row align-items-center justify-content-between g-4">
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="banner-semester-pill">
+                            <span class="pulse-dot"></span>
+                            <span>{{ lumina_semester }} • {{ lumina_stats.active_week_label }}</span>
+                        </div>
+                        <h1 class="banner-title">{{#str}}welcome_back, theme_lumina{{/str}}, {{ lumina_user.fullname }}! 👋</h1>
+                        <p class="banner-subtitle">{{#str}}welcome_subtitle, theme_lumina{{/str}}</p>
+                        <div class="semester-progress-box">
+                            <div class="progress-labels">
+                                <span>{{#str}}semester_progress, theme_lumina{{/str}}</span>
+                                <span class="progress-val">{{ lumina_stats.progress_percent }}% Selesai</span>
+                            </div>
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill" style="width: {{ lumina_stats.progress_percent }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="banner-metrics-matrix">
+                            <div class="metric-col" role="button" onclick="window.location='{{{ lumina_nav.grades_url }}}'" style="cursor: pointer;" title="Klik untuk lihat rincian rekap nilai">
+                                <span class="metric-label">Nilai Rata-rata</span>
+                                <div class="metric-value">{{ lumina_stats.avg_grade_stat }}</div>
+                                <span class="metric-badge">{{#lumina_stats.completed_tasks_count}}{{ lumina_stats.completed_tasks_count }} Tugas Tuntas{{/lumina_stats.completed_tasks_count}}{{^lumina_stats.completed_tasks_count}}Belum Ada Nilai{{/lumina_stats.completed_tasks_count}}</span>
+                            </div>
+                            <div class="metric-col" role="button" onclick="window.location='{{{ config.wwwroot }}}/my/courses.php'" style="cursor: pointer;" title="Lihat semua kursus">
+                                <span class="metric-label">Mata Kuliah</span>
+                                <div class="metric-value">{{ lumina_stats.enrolled_courses_count }}</div>
+                                <span class="metric-badge">Terdaftar</span>
+                            </div>
+                            <div class="metric-col" role="button" onclick="window.location='{{{ config.wwwroot }}}/calendar/view.php?view=upcoming'" style="cursor: pointer;" title="Lihat tugas mendatang">
+                                <span class="metric-label">Tugas Terbuka</span>
+                                <div class="metric-value">{{ lumina_stats.pending_tasks_count }}</div>
+                                <span class="metric-badge">Tenggat Aktif</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lumina Up-to-date Security Status Banner (Dismissible) -->
+            <div id="luminaSecurityBanner" class="lumina-security-banner d-print-none mb-3 alert alert-dismissible fade show" role="alert" style="display: none;">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="security-banner-icon-wrapper">
+                            <span class="material-symbols-outlined">verified_user</span>
+                        </div>
+                        <div>
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <h6 class="security-banner-title mb-0">Status Keamanan: {{ lumina_security.status_text }}</h6>
+                                <span class="badge rounded-pill bg-success bg-opacity-15 text-success border border-success border-opacity-25 px-2 py-0-5 font-semibold" style="font-size: 0.72rem;">
+                                    Skor {{ lumina_security.score }}% Optimal
+                                </span>
+                            </div>
+                            <p class="security-banner-desc mb-0">
+                                {{#lumina_user.is_siteadmin}}
+                                Proteksi sesi SSL, kebijakan sandi, MFA, dan isolasi plugin Lumina aktif. Tema terlindungi aman dari pembaruan Moodle core.
+                                {{/lumina_user.is_siteadmin}}
+                                {{^lumina_user.is_siteadmin}}
+                                Sesi akademik Anda diamankan dengan protokol enkripsi terkini dan autentikasi terverifikasi.
+                                {{/lumina_user.is_siteadmin}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 fw-semibold d-inline-flex align-items-center gap-1 shadow-xs" data-bs-toggle="modal" data-bs-target="#luminaSecurityModal">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">security</span>
+                            Detail Keamanan
+                        </button>
+                        <button type="button" class="btn-close position-static p-2" data-bs-dismiss="alert" aria-label="Close" onclick="sessionStorage.setItem('lumina_sec_dismissed', '1')"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lumina Quick Action Bar on Dashboard -->
+            <div class="lumina-quick-actions d-print-none">
+                <a href="{{{ config.wwwroot }}}/my/courses.php" class="quick-action-card">
+                    <div class="action-icon bg-indigo">
+                        <span class="material-symbols-outlined">play_circle</span>
+                    </div>
+                    <div class="action-meta">
+                        <span class="action-title">{{#str}}continue_learning, theme_lumina{{/str}}</span>
+                        <span class="action-subtitle">Lanjutkan modul aktif</span>
+                    </div>
+                </a>
+                <a href="{{{ config.wwwroot }}}/calendar/view.php" class="quick-action-card">
+                    <div class="action-icon bg-cyan">
+                        <span class="material-symbols-outlined">event_available</span>
+                    </div>
+                    <div class="action-meta">
+                        <span class="action-title">{{#str}}today_schedule, theme_lumina{{/str}}</span>
+                        <span class="action-subtitle">Lihat agenda hari ini</span>
+                    </div>
+                </a>
+                <a href="{{{ config.wwwroot }}}/user/files.php" class="quick-action-card">
+                    <div class="action-icon bg-light-blue">
+                        <span class="material-symbols-outlined">cloud_download</span>
+                    </div>
+                    <div class="action-meta">
+                        <span class="action-title">{{#str}}offline_materials, theme_lumina{{/str}}</span>
+                        <span class="action-subtitle">Sinkronisasi berkas</span>
+                    </div>
+                </a>
+                <a href="{{{ lumina_nav.virtualclass_url }}}" class="quick-action-card">
+                    <div class="action-icon bg-green">
+                        <span class="material-symbols-outlined">{{ lumina_nav.virtualclass_icon }}</span>
+                    </div>
+                    <div class="action-meta">
+                        <span class="action-title">{{ lumina_nav.virtualclass_title }}</span>
+                        <span class="action-subtitle">{{ lumina_nav.virtualclass_subtitle }}</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Lumina Dashboard Cards: Deadlines Only -->
+            <div class="lumina-dashboard-cards d-print-none">
+                <!-- Upcoming Deadlines Card -->
+                <div class="lumina-section-card d-print-none" style="grid-column: 1 / -1;">
+                    <div class="section-card-header">
+                        <span class="section-title">Tenggat Waktu Mendatang</span>
+                        <a href="{{{ config.wwwroot }}}/calendar/view.php?view=upcoming" class="section-link">Semua Tugas →</a>
+                    </div>
+                    {{#lumina_upcoming_assignments}}
+                    <div class="deadline-item">
+                        <div class="deadline-icon deadline-icon-{{ status_class }}">
+                            <span class="material-symbols-outlined">{{ type_icon }}</span>
+                        </div>
+                        <div class="deadline-meta">
+                            <span class="deadline-name">{{{ name }}}</span>
+                            <span class="deadline-course">{{{ coursename }}}</span>
+                        </div>
+                        <div class="deadline-right">
+                            <span class="deadline-badge {{ status_class }}">{{ status_label }}</span>
+                            <span class="deadline-time">{{ due_label }}</span>
+                        </div>
+                    </div>
+                    {{/lumina_upcoming_assignments}}
+                    {{^lumina_upcoming_assignments}}
+                    <div class="deadline-empty">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        <span>Semua tugas dan kuis selesai!</span>
+                        <a href="{{{ config.wwwroot }}}/calendar/view.php?view=upcoming" class="btn btn-sm btn-outline-primary mt-2">Lihat Kalender</a>
+                    </div>
+                    {{/lumina_upcoming_assignments}}
+                </div>
+            </div>
+            {{/lumina_nav.is_dashboard}}
+
+            <!-- Lumina Grade Pages Hero Banner -->
+            {{#lumina_nav.is_grades}}
+            <div class="lumina-grade-page-banner d-print-none mb-3">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="material-symbols-outlined" style="color: var(--lumina-primary); font-size: 1.4rem;">monitoring</span>
+                            <h2 class="mb-0" style="font-size: 1.25rem; font-weight: 800; color: var(--lumina-text-headline); font-family: var(--lumina-font-display);">Buku Nilai Akademik</h2>
+                        </div>
+                        <p class="mb-0 small text-muted">Rekap nilai real-time dari seluruh tugas & kuis yang telah Anda selesaikan</p>
+                    </div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        {{#lumina_stats.avg_grade_stat}}
+                        <div class="lumina-grade-stat-pill">
+                            <span class="stat-pill-label">Nilai Rata-rata</span>
+                            <span class="stat-pill-value">{{ lumina_stats.avg_grade_stat }}</span>
+                        </div>
+                        {{/lumina_stats.avg_grade_stat}}
+                        <div class="lumina-grade-stat-pill">
+                            <span class="stat-pill-label">Tugas Selesai</span>
+                            <span class="stat-pill-value">{{ lumina_stats.completed_tasks_count }}</span>
+                        </div>
+                        <div class="lumina-grade-stat-pill">
+                            <span class="stat-pill-label">Mata Kuliah</span>
+                            <span class="stat-pill-value">{{ lumina_user.enrolled_count }}</span>
+                        </div>
+                        <a href="{{{ config.wwwroot }}}/my/" class="btn btn-sm btn-outline-primary rounded-pill fw-semibold" style="font-size: 0.8125rem;">
+                            <span class="material-symbols-outlined" style="font-size: 1rem; vertical-align: -4px; margin-right: 2px;">arrow_back</span>
+                            Ke Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{/lumina_nav.is_grades}}
+
+            <!-- Standard Moodle Page Header & Secondary Navigation -->
+            {{{ output.full_header }}}
+            {{#secondarymoremenu}}
+                <div class="secondary-navigation d-print-none mb-3">
+                    {{> core/secondarymoremenu}}
+                </div>
+            {{/secondarymoremenu}}
+
+            <div id="page-content" class="pb-3 d-print-block">
+                <div id="region-main-box">
+                    {{#hasregionmainsettingsmenu}}
+                    <div id="region-main-settings-menu" class="d-print-none">
+                        <div> {{{ regionmainsettingsmenu }}} </div>
+                    </div>
+                    {{/hasregionmainsettingsmenu}}
+                    <div id="region-main">
+                        {{#hasregionmainsettingsmenu}}
+                            <div class="region_main_settings_menu_proxy"></div>
+                        {{/hasregionmainsettingsmenu}}
+                        {{{ output.course_content_header }}}
+                        {{#headercontent}}
+                            {{> core/activity_header }}
+                        {{/headercontent}}
+                        {{#overflow}}
+                            <div class="container-fluid tertiary-navigation mb-3">
+                                <div class="navitem">
+                                    {{> core/tertiary_navigation_selector}}
+                                </div>
+                            </div>
+                        {{/overflow}}
+                        {{{ output.main_content }}}
+                        {{{ output.activity_navigation }}}
+                        {{{ output.course_content_footer }}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> theme_lumina/footer }}
+    </div>
+    {{{ output.standard_after_main_region_html }}}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Rail toggle handler
+    const railToggle = document.getElementById('luminaRailToggle');
+    if (railToggle) {
+        railToggle.addEventListener('click', function() {
+            document.body.classList.toggle('lumina-rail-collapsed');
+            const isCollapsed = document.body.classList.contains('lumina-rail-collapsed');
+            if (window.M && window.M.util && window.M.util.set_user_preference) {
+                M.util.set_user_preference('lumina-rail-collapsed', isCollapsed ? 1 : 0);
+            }
+        });
+    }
+
+    // Mobile sidebar and overlay toggle handler
+    const mobileToggle = document.getElementById('luminaMobileToggle');
+    const sidebar = document.getElementById('luminaSidebar');
+    const overlay = document.getElementById('luminaMobileOverlay');
+    if (mobileToggle && sidebar) {
+        mobileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            sidebar.classList.toggle('mobile-open');
+            if (overlay) overlay.classList.toggle('show');
+        });
+
+        if (overlay) {
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('mobile-open');
+                overlay.classList.remove('show');
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
+                sidebar.classList.remove('mobile-open');
+                if (overlay) overlay.classList.remove('show');
+            }
+        });
+    }
+
+    // Keyboard shortcut for Cmd+K search
+    document.addEventListener('keydown', function(e) {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+            const searchInput = document.querySelector('.lumina-search-input');
+            if (searchInput && document.activeElement !== searchInput) {
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
+            }
+        }
+    });
+    // Show security alert banner unless dismissed in this session
+    const secBanner = document.getElementById('luminaSecurityBanner');
+    if (secBanner && !sessionStorage.getItem('lumina_sec_dismissed')) {
+        secBanner.style.display = 'block';
+    }
+});
+</script>
+
+{{#lumina_user.is_logged_in}}
+{{> theme_lumina/security_modal }}
+{{^has_local_lumina_ai}}
+{{> theme_lumina/ai_chatbot }}
+{{/has_local_lumina_ai}}
+{{/lumina_user.is_logged_in}}
+
+
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader', 'theme_boost/drawer'], function(Loader, Drawer) {
+    Drawer.init();
+    M.util.js_complete('theme_boost/loader');
+});
+{{/js}}

@@ -1,0 +1,8 @@
+# Moodle Security Hardening - Block sensitive files
+<FilesMatch "\.(xml|txt|md|feature)$|/fixtures/|/behat/">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Disable Directory Indexing
+Options -Indexes

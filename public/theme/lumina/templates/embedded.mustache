@@ -1,0 +1,34 @@
+{{! Lumina LMS — Embedded/iFrame Layout }}
+{{{ output.doctype }}}
+<html {{{ output.htmlattributes }}}>
+<head>
+    <title>{{{ output.page_title }}}</title>
+    <link rel="shortcut icon" href="{{{ output.favicon }}}" />
+    {{{ output.standard_head_html }}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #F8F9FF; color: #334155; }
+        #page { padding: 1rem; }
+        .embedded-main { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(15,23,42,0.05); }
+    </style>
+</head>
+<body {{{ output.body_attributes }}}>
+{{> core/local/toast/wrapper}}
+{{{ output.standard_top_of_body_html }}}
+<div id="page" {{#hasfakeblocks}}class="has-fake-blocks"{{/hasfakeblocks}}>
+    {{#hasfakeblocks}}
+    <div class="embedded-blocks">{{{ fakeblocks }}}</div>
+    {{/hasfakeblocks}}
+    <section class="embedded-main">
+        {{#headercontent}}{{> core/activity_header }}{{/headercontent}}
+        {{{ output.main_content }}}
+    </section>
+</div>
+{{{ output.standard_end_of_body_html }}}
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader'], function() { M.util.js_complete('theme_boost/loader'); });
+{{/js}}
+

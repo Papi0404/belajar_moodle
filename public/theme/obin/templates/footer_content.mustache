@@ -1,0 +1,124 @@
+{{!
+    @template theme_obin/footer_content
+    Pied de page OBIN — 3 colonnes, design sobre.
+}}
+<footer class="obin-footer d-print-none">
+    <div class="obin-footer-inner">
+
+        <div class="obin-footer-col obin-footer-col--brand">
+            <span class="obin-footer-sitename">{{sitename}}</span>
+            {{#tagline}}<p class="obin-footer-tagline">{{tagline}}</p>{{/tagline}}
+            <div class="obin-footer-copyright">© {{year}}</div>
+            <img src="{{moodlelogourl}}" alt="Moodle" class="obin-footer-moodlelogo">
+        </div>
+
+        <nav class="obin-footer-col obin-footer-col--links" aria-label="{{#str}}pluginname, theme_obin{{/str}}">
+            {{#links}}<a href="{{url}}">{{label}}</a>{{/links}}
+            {{#email}}<a href="mailto:{{email}}">{{email}}</a>{{/email}}
+            {{#hassociallinks}}
+            <div class="obin-footer-social">
+                {{#sociallinks}}
+                <a href="{{url}}" target="_blank" rel="noopener" class="obin-social-btn" aria-label="{{label}}">{{{icon}}}</a>
+                {{/sociallinks}}
+            </div>
+            {{/hassociallinks}}
+        </nav>
+
+        <div class="obin-footer-col obin-footer-col--actions">
+            <p class="obin-footer-app-label">{{#str}}mobileapp, theme_obin{{/str}}</p>
+            <div class="obin-footer-app-btns">
+                <a href="https://apps.apple.com/app/moodle/id633359593" target="_blank" rel="noopener" class="obin-app-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                    App Store
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.moodle.moodlemobile" target="_blank" rel="noopener" class="obin-app-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-1.1 1.2-1.7 2.1-1L20.1 11c.9.6.9 1.9 0 2.5L5.1 21.5C4.2 22.1 3 21.6 3 20.5z"/></svg>
+                    Google Play
+                </a>
+            </div>
+            <button id="openHaOverlay" class="obin-donate-btn">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+                {{#str}}donatebutton, theme_obin{{/str}}
+            </button>
+        </div>
+
+    </div>
+</footer>
+
+<div id="haWidgetModal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;backdrop-filter:blur(15px) brightness(0.5);z-index:2147483647;">
+    <button id="closeHaWidgetBtn" style="position:absolute;top:.5rem;right:1.5rem;z-index:2147483648;background:#EFEFF4;border:none;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div style="position:relative;width:100%;max-width:950px;height:100%;overflow:hidden;">
+        <iframe id="haWidget" data-src="https://www.helloasso.com/associations/citoyennete-et-inclusion-numerique-obin/formulaires/4/widget?view=overlay" style="width:100%;height:100%;border:none;border-radius:8px;"></iframe>
+    </div>
+</div>
+<script>
+(function(){
+    var o=document.getElementById("openHaOverlay"),c=document.getElementById("closeHaWidgetBtn"),m=document.getElementById("haWidgetModal");
+    if(!o||!m)return;
+    o.addEventListener("click",function(){var f=document.getElementById("haWidget");if(f&&!f.getAttribute("src")){f.setAttribute("src",f.getAttribute("data-src"));}m.style.display="flex";});
+    if(c)c.addEventListener("click",function(){m.style.display="none";});
+    m.addEventListener("click",function(e){if(e.target===m)m.style.display="none";});
+})();
+</script>
+<script>
+(function () {
+    var footer = document.querySelector(".obin-footer");
+    if (!footer || !window.requestAnimationFrame) {
+        return;
+    }
+    var extra = 0;
+    var pending = false;
+    var GAP = 16;
+    var MIN_DRAWER = 160;
+
+    // On a page shorter than the screen, push the footer down to the bottom of
+    // the screen instead of leaving an empty band under it.
+    function stickFooter() {
+        var box = footer.getBoundingClientRect();
+        var naturalBottom = box.bottom + window.pageYOffset - extra;
+        var wanted = Math.max(0, Math.round(window.innerHeight - naturalBottom));
+        if (wanted !== extra) {
+            extra = wanted;
+            footer.style.marginTop = extra ? "calc(2rem + " + extra + "px)" : "";
+        }
+    }
+
+    // Moodle 5.3 anchored drawers are fixed to the screen: stop them just above
+    // the footer when it is visible, so they never cover it.
+    function fitDrawers() {
+        var anchored = window.innerWidth >= 992 &&
+            (document.body.classList.contains("limitedwidth") ||
+             document.body.classList.contains("pagelayout-standard"));
+        var footerTop = footer.getBoundingClientRect().top;
+        var drawers = document.querySelectorAll(".drawer.drawer-left, .drawer.drawer-right");
+        for (var i = 0; i < drawers.length; i++) {
+            if (anchored && footerTop < window.innerHeight) {
+                var room = footerTop - drawers[i].getBoundingClientRect().top - GAP;
+                drawers[i].style.maxHeight = Math.max(MIN_DRAWER, Math.round(room)) + "px";
+            } else {
+                drawers[i].style.maxHeight = "";
+            }
+        }
+    }
+
+    function update() {
+        pending = false;
+        stickFooter();
+        fitDrawers();
+    }
+    function schedule() {
+        if (!pending) {
+            pending = true;
+            window.requestAnimationFrame(update);
+        }
+    }
+    window.addEventListener("scroll", schedule, {passive: true});
+    window.addEventListener("resize", schedule);
+    if (window.ResizeObserver) {
+        new ResizeObserver(schedule).observe(document.body);
+    }
+    update();
+})();
+</script>

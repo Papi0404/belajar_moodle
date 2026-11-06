@@ -1,0 +1,49 @@
+{{!
+    Lumina LMS Footer Template.
+}}
+<footer id="page-footer" class="lumina-footer border-top bg-white py-4 mt-auto">
+    <div class="container-fluid px-4">
+        <div class="row align-items-center justify-content-between gy-3">
+            <div class="col-12 col-md-auto d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="lumina-logo-icon" style="width: 24px; height: 24px; font-size: 14px;">L</div>
+                    <span class="fw-bold text-dark" style="font-size: 0.875rem;">Lumina LMS</span>
+                </div>
+                <span class="text-muted" style="font-size: 0.8125rem;">•</span>
+                <span class="text-muted" style="font-size: 0.8125rem;">
+                    {{#str}}poweredbymoodle, core{{/str}} {{#output.moodle_release}}v{{{output.moodle_release}}}{{/output.moodle_release}}
+                </span>
+            </div>
+
+            <div class="col-12 col-md-auto">
+                <ul class="nav gap-3 list-unstyled mb-0" style="font-size: 0.8125rem;">
+                    {{#output.page_doc_link}}
+                        <li class="nav-item">{{{output.page_doc_link}}}</li>
+                    {{/output.page_doc_link}}
+                    {{#output.services_support_link}}
+                        <li class="nav-item">{{{output.services_support_link}}}</li>
+                    {{/output.services_support_link}}
+                    {{#output.supportemail}}
+                        <li class="nav-item">{{{output.supportemail}}}</li>
+                    {{/output.supportemail}}
+                    <li class="nav-item text-muted">
+                        {{{output.login_info}}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-moodle-hook mt-2" style="font-size: 0.75rem;">
+            {{{ output.standard_footer_html }}}
+            {{{ output.standard_end_of_body_html }}}
+        </div>
+    </div>
+
+    {{#output.debug_footer_html}}
+        <div class="footer-content-debugging bg-dark text-light p-3 mt-3">
+            <div class="container-fluid">
+                {{{ output.debug_footer_html }}}
+            </div>
+        </div>
+    {{/output.debug_footer_html}}
+</footer>

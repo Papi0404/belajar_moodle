@@ -1,0 +1,95 @@
+<header class="lumina-topbar">
+    <div class="d-flex align-items-center gap-3">
+        <!-- Mobile rail toggle -->
+        <button class="action-icon-btn d-lg-none" id="luminaMobileToggle" type="button" aria-label="Toggle Navigation">
+            <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+
+        <!-- Command search bar with shortcut -->
+        <form action="{{{ config.wwwroot }}}/course/search.php" method="get" class="lumina-search-container m-0">
+            <span class="material-symbols-outlined lumina-search-icon">search</span>
+            <input type="text" name="search" class="lumina-search-input" placeholder="{{#str}}search_placeholder, theme_lumina{{/str}}" autocomplete="off">
+            <div class="lumina-search-badge">
+                <span>⌘</span><span>K</span>
+            </div>
+        </form>
+    </div>
+
+    <div class="lumina-topbar-actions">
+        <!-- Semester pill badge -->
+        <div class="semester-badge d-none d-xl-inline-flex">
+            <span class="material-symbols-outlined badge-icon">calendar_today</span>
+            <span>{{ lumina_semester }}</span>
+        </div>
+
+        <!-- Moodle edit switch (if editing allowed) -->
+        {{{ output.edit_switch }}}
+
+        <!-- Direct message toggle -->
+        <a href="{{{ config.wwwroot }}}/message/index.php" class="action-icon-btn" aria-label="Pesan Masuk">
+            <span class="material-symbols-outlined text-[22px]">chat_bubble_outline</span>
+            {{#lumina_user.unread_messages}}
+            <span class="unread-dot"></span>
+            {{/lumina_user.unread_messages}}
+        </a>
+
+        <!-- Notification toggle -->
+        <a href="{{{ config.wwwroot }}}/message/output/popup/notifications.php" class="action-icon-btn" aria-label="Notifikasi">
+            <span class="material-symbols-outlined text-[22px]">notifications</span>
+            {{#lumina_user.unread_notifications}}
+            <span class="unread-count-pill">{{ lumina_user.unread_notifications }}</span>
+            {{/lumina_user.unread_notifications}}
+        </a>
+
+        <!-- Up-to-date Security Status Pill & Modal Trigger -->
+        <button type="button" 
+                class="lumina-security-pill d-inline-flex align-items-center border-0 bg-transparent p-0" 
+                data-bs-toggle="modal" 
+                data-bs-target="#luminaSecurityModal"
+                aria-label="Pusat Keamanan & Pembaruan Sistem"
+                title="Status Keamanan: {{ lumina_security.status_text }}">
+            <div class="security-indicator-badge">
+                <span class="security-pulse-dot"></span>
+                <span class="material-symbols-outlined security-icon">verified_user</span>
+                <span class="security-text d-none d-lg-inline">{{ lumina_security.badge_label }}</span>
+            </div>
+        </button>
+
+        <!-- Language menu if present -->
+        {{#langmenu}}
+            {{> theme_boost/language_menu }}
+        {{/langmenu}}
+
+        <div class="h-6 w-[1px] bg-outline-variant mx-1 d-none d-sm-block"></div>
+
+        <!-- User profile pill & Moodle dropdown -->
+        {{#lumina_user.is_logged_in}}
+        <div class="dropdown">
+            <div class="user-profile-pill" data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                <div class="avatar-wrapper">
+                    {{{ lumina_user.avatar_html }}}
+                    <span class="status-dot"></span>
+                </div>
+                <div class="user-meta d-none d-md-flex flex-column">
+                    <span class="user-name">{{ lumina_user.fullname }}</span>
+                    <span class="user-role">{{ lumina_user.role_label }}</span>
+                </div>
+                <span class="material-symbols-outlined text-outline text-[18px]">expand_more</span>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-xl py-2 mt-2">
+                <li><a class="dropdown-item py-2 px-3 d-flex align-items-center gap-2" href="{{{ config.wwwroot }}}/user/profile.php"><span class="material-symbols-outlined text-[18px]">account_circle</span> Profil Saya</a></li>
+                <li><a class="dropdown-item py-2 px-3 d-flex align-items-center gap-2" href="{{{ lumina_nav.grades_url }}}"><span class="material-symbols-outlined text-[18px]">monitoring</span> Transkrip Nilai</a></li>
+                <li><a class="dropdown-item py-2 px-3 d-flex align-items-center gap-2" href="{{{ config.wwwroot }}}/calendar/view.php"><span class="material-symbols-outlined text-[18px]">event</span> Kalender Akademik</a></li>
+                <li><a class="dropdown-item py-2 px-3 d-flex align-items-center gap-2" href="{{{ config.wwwroot }}}/user/preferences.php"><span class="material-symbols-outlined text-[18px]">settings</span> Preferensi Akun</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item py-2 px-3 text-danger d-flex align-items-center gap-2" href="{{{ config.wwwroot }}}/login/logout.php?sesskey={{{ config.sesskey }}}"><span class="material-symbols-outlined text-[18px]">logout</span> Keluar (Logout)</a></li>
+            </ul>
+        </div>
+        {{/lumina_user.is_logged_in}}
+        {{^lumina_user.is_logged_in}}
+        <a href="{{{ config.wwwroot }}}/login/index.php" class="btn btn-primary btn-sm px-3">
+            Masuk / Login
+        </a>
+        {{/lumina_user.is_logged_in}}
+    </div>
+</header>

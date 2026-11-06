@@ -1,0 +1,110 @@
+{{!
+    Lumina LMS Split-Screen Login Template.
+}}
+{{> theme_lumina/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+
+<div id="page-wrapper" class="min-vh-100 d-flex flex-column">
+    {{{ output.standard_top_of_body_html }}}
+
+    <div class="container-fluid p-0 flex-grow-1">
+        <div class="row g-0 min-vh-100">
+            <!-- Left Brand / Hero Panel -->
+            <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-between p-5 text-white" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%); position: relative; overflow: hidden;">
+                <!-- Decorative background elements -->
+                <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%); pointer-events: none;"></div>
+                <div style="position: absolute; bottom: -50px; left: -50px; width: 250px; height: 250px; border-radius: 50%; background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%); pointer-events: none;"></div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <div class="lumina-logo-icon shadow-sm" style="width: 44px; height: 44px; font-size: 24px;">L</div>
+                    <div>
+                        <div class="fw-bold fs-4 tracking-tight">Lumina LMS</div>
+                        <div class="small text-white-50">Next-Generation Learning Experience</div>
+                    </div>
+                </div>
+
+                <div class="my-auto py-5" style="max-width: 520px; z-index: 1;">
+                    <div class="badge rounded-pill bg-white bg-opacity-10 text-white border border-white border-opacity-10 px-3 py-2 mb-4 d-inline-flex align-items-center gap-2">
+                        <span class="lumina-status-dot"></span>
+                        {{#lumina_platform}}{{ semester_active_label }}{{/lumina_platform}}{{^lumina_platform}}Academic Year Active{{/lumina_platform}}
+                    </div>
+                    <h1 class="display-5 fw-bold mb-4" style="line-height: 1.15; font-family: var(--lumina-font-display);">
+                        Unlock Your Full Academic Potential.
+                    </h1>
+                    <p class="lead text-white-50 mb-5" style="font-size: 1.05rem; line-height: 1.6;">
+                        Experience an intelligent, unified workspace designed for modern students and educators. Seamlessly navigate courses, track real-time analytics, and collaborate effortlessly.
+                    </p>
+
+                    <div class="row g-3 pt-3 border-top border-white border-opacity-10">
+                        {{#lumina_platform}}
+                        <div class="col-4">
+                            <div class="fw-bold fs-3 text-white">{{ total_courses }}+</div>
+                            <div class="small text-white-50">Mata Kuliah Aktif</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="fw-bold fs-3 text-white">{{ total_users }}</div>
+                            <div class="small text-white-50">Pengguna Aktif</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="fw-bold fs-3 text-white">{{ tls_label }}</div>
+                            <div class="small text-white-50">Enkripsi Data</div>
+                        </div>
+                        {{/lumina_platform}}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center small text-white-50 border-top border-white border-opacity-10 pt-4">
+                    <span>&copy; 2026 Lumina LMS. Powered by Moodle 5.3.</span>
+                    <span>Institutional Security Verified</span>
+                </div>
+            </div>
+
+            <!-- Right Login Form Panel -->
+            <div class="col-12 col-lg-6 d-flex flex-column justify-content-center p-4 p-md-5 bg-white">
+                <div class="w-100 mx-auto" style="max-width: 440px;">
+                    <!-- Mobile Brand Header -->
+                    <div class="d-flex d-lg-none align-items-center gap-2 mb-4">
+                        <div class="lumina-logo-icon" style="width: 36px; height: 36px; font-size: 20px;">L</div>
+                        <span class="fw-bold fs-5 text-dark">Lumina LMS</span>
+                    </div>
+
+                    <div class="mb-4">
+                        <h2 class="h3 fw-bold text-dark mb-2">Welcome Back</h2>
+                        <p class="text-muted small">
+                            Sign in with your institutional credentials to access your dashboard, courses, and grades.
+                        </p>
+                    </div>
+
+                    {{#leftinstructions}}
+                        <div class="alert alert-info py-2 px-3 small mb-4">
+                            {{{leftinstructions}}}
+                        </div>
+                    {{/leftinstructions}}
+
+                    <div class="lumina-login-main-form">
+                        {{{ output.main_content }}}
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top text-center text-muted small">
+                        Need assistance accessing your account?
+                        <a href="mailto:januarzidane6@gmail.com" class="text-primary fw-medium text-decoration-none">Contact IT Helpdesk (januarzidane6@gmail.com)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{{ output.standard_footer_html }}}
+    {{{ output.standard_end_of_body_html }}}
+</div>
+
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_boost/loader');
+require(['theme_boost/loader'], function() {
+  M.util.js_complete('theme_boost/loader');
+});
+{{/js}}
